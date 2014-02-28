@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ACM@UCR</title>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="description" content="ACM@UCR's website" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+
+    <style>
+        body {
+            /* Open Sans is a nice easy font-family to work with and usually
+             * yields good looking pages. The user likely has a cached copy of
+             * it already too. */
+            font-family: "Open Sans", sans-serif;
+
+            /* True white is often too bright to use as a background */
+            background-color: #FEFEFE;
+
+            /* True black is often too dark to use as a base font color */
+            color: #161616;
+
+            /* This will keep any text from riding up too close to any of the
+             * edges of the page. */
+            padding: 2em 2em;
+        }
+
+        /* This adds a margin to the bottom of every post and top-level element
+         * which helps provide a consistent level of spacing. The bottom and
+         * top margins of the page are handled by the body rules. */
+        body > *:not(:last-child), #articles > *:not(:last-child) {
+            padding-bottom: 2em;
+        }
+
+        a.pure-button-primary {
+            /* The default color that Pure.css uses is a little too harsh imo
+             * so this is a much more faded blue. */
+            background-color: #5CADB5;
+
+            /* The white on blue can be difficult to read if it's not bolded,
+             * this also makes the primary button stand out more. */
+            font-weight: 600;
+        }
+
+        #banner > img {
+            /* This allows the banner to resize to the viewport's width without
+             * getting massive. */
+            max-height: 15em;
+        }
+
+        #actions {
+            /* This is a simple trick to center the list of buttons. We use a
+             * different trick to center the posts that uses margins. That
+             * would be overkill here and require an additional containing
+             * element */
+            text-align: center;
+        }
+
+        .post {
+            /* Center the post by setting the left and right margins to auto */
+            margin: 0 auto;
+
+            /* This makes the text a little nicer to read */
+            line-height: 1.5;
+
+            /* This ensures that the posts won't get too wide because generally
+             * super wide paragraphs are considered a little harder to read.
+             * Not a lot of good empirical evidence to support this though.*/
+            max-width: 50em;
+        }
+
+        .post-title {
+            /* This brings the author part closer to the title. There is still
+             * space between the two according to the line-height though. */
+            margin-bottom: 0;
+        }
+
+        .post-author {
+            /* This makes sure that the author part of the post looks a little
+             * bit faded. It looks nice and keeps the focus on the content, but
+             * mainly it looks nice. */
+            opacity: 0.7;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3b8bba;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body id="main-page">
+    <header id="top-header">
+        <div id="banner">
+            <img src="img/acm_logo_ucr.svg">
+        </div>
+    </header>
+    <div id="actions">
+        <a href="join.htm" class="pure-button pure-button-primary">Become a Member</a>
+        <a href="check.htm" class="pure-button">Check Your Membership Status</a>
+        <a href="mailto:acm@applesauce.com" class="pure-button">Contact Us</a>
+    </div>
+    <div id="articles">
+        <article class="post">
+            <header>
+                <h2 class="post-title">ACM's 1st General Meeting Winter 2014</h3>
+                <div class="post-author">by <span class="author">Samuel Hong</span> on <time datetime="2013-11-13">November 13, 2013</time></div>
+            </header>
+            <div class="post-body">
+                <p>Hey everyone! Thanks for coming out for <b>ACM's 1st General Meeting!</b></p>
+                <p>I noticed a lot of people weren't able to make it because of class conflicts. But that's alright, here are the <b>slides</b>.</p>
+                <p><a href="http://slid.es/acmucr/acm-1st-general-meeting-winter-2013">ACM 1st General Meeting Winter 2014</a></p>
+                <p>T-shirt ideas are due by January 31st so please email your ideas to <a href="mailto:acm.at.ucr@gmail.com?Subject=ACM%20T-shirt%20Design">acm.at.ucr@gmail.com</a>.</p>
+                <p>If you have questions feel free to ask any of the officers, good luck and have fun in the new quarter!</p>
+            </div>
+        </article>
+        <article class="post">
+            <header>
+                <h2 class="post-title">Embedded Systems Workshop</h3>
+                <div class="post-author">by <span class="author">Samuel Hong</span> on <time datetime="2013-11-13">November 13, 2014</time></div>
+            </header>
+            <div class="post-body">
+                <p>Hey guys, here's some more links for our Embedded Systems Workshop!</p>
+                <p><a href="https://docs.google.com/a/ucr.edu/document/d/17M72gDyaAkelV7XuJCH_XDmI7P8vaUpJEi1M0eB18N4/">Lab 3: Finite State Machines</a></p>
+                <p><a href="https://docs.google.com/a/ucr.edu/document/d/1_TXgttUMXbfr7aX0PElsjWE7GMc0NcGTbcCjcpLSrR4/">Lab 4: Finite State Machines with Transitions</a></p>
+                <p>Lab times are:
+                Mondays 6-7
+                Tuesdays 5-6
+                Fridays 6-7</p>
+                <p>Feel free to show up to any of them even if you're new!</p>
+            </div>
+        </article>
+    </div>
+</body>
+</html>

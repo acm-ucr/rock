@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   class="pull-left"
+   viewBox="0 0 588 355"
+   style="width: 300px; height: 170px;"
+   id="svg2985"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   width="100%"
+   height="100%"
+   sodipodi:docname="acmlogoucr.svg">
+  <metadata
+     id="metadata3053">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="709"
+     id="namedview3051"
+     showgrid="false"
+     inkscape:zoom="1.684507"
+     inkscape:cx="294"
+     inkscape:cy="177.5"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2985" />
+  <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+  <defs
+     id="defs2987">
+    <linearGradient
+       id="svg_6"
+       x1="0.74219"
+       y1="0.21484"
+       x2="0.00781"
+       y2="0.99219">
+      <stop
+         offset="0"
+         stop-color="#83a9de"
+         id="stop2990" />
+      <stop
+         offset="1"
+         stop-color="#20629c"
+         id="stop2992" />
+    </linearGradient>
+    <linearGradient
+       id="svg_11"
+       x1="0.48047"
+       y1="0.02344"
+       x2="0.48047"
+       y2="0.62109">
+      <stop
+         offset="0"
+         stop-color="#20629c"
+         id="stop2995" />
+      <stop
+         offset="1"
+         stop-color="#83a9de"
+         id="stop2997" />
+    </linearGradient>
+    <linearGradient
+       y2="1"
+       x2="1"
+       y1="0"
+       x1="0"
+       id="svg_15">
+      <stop
+         stop-color="#326fa8"
+         offset="0"
+         id="stop3000" />
+      <stop
+         stop-color="#83a9de"
+         offset="1"
+         id="stop3002" />
+    </linearGradient>
+    <path
+       style="fill:url(#svg_15);fill-rule:evenodd;stroke:#fab20b;stroke-width:3"
+       inkscape:connector-curvature="0"
+       d="m 310.54901,345.48001 c 0,0 -33.34802,0 -33.34802,0 -17.91199,0 -39.47098,-1.94601 -69.49701,-6.841 C 177.176,333.66199 167.53,329.07999 162.32201,306.387 160.135,296.85804 156.683,257.521 156.683,257.521 c 0,15.603 27.00101,19.90201 44.73302,21.99002 23.32602,2.746 49.82098,3.909 73.49597,3.909 0,0 37.92618,0 37.92618,0 17.61682,0 53.26184,-1.16299 76.58884,-3.909 17.73199,-2.08801 35.267,-4.88702 45.10901,-23.94504 0,0 -3.828,41.29205 -6.01501,50.82101 -5.20801,22.69299 -14.88095,27.147 -45.38196,32.25201 -29.577,4.94998 -57.76605,6.841 -72.58997,6.841 l -3e-5,0 -3e-5,0 z"
+       id="path3902-7" />
+  </defs>
+  <g
+     display="inline"
+     id="g3005">
+    <g
+       id="svg_10">
+      <path
+         d="m588.138,173.00549c-42.46997,-4.10388 -41.71198,15.63751 -76.00201,15.63751c-33.91296,0 -66.22699,-17.23692 -66.22699,22.26195l0.19202,17.23303c0.11099,9.91199 39.84003,4.83896 48.81201,3.99501c29.61499,0 27.617,-33.22804 88.02997,-33.22804c-10.61902,-2.65796 -33.771,-3.17998 -48.29498,2.07304c6.526,-12.39601 34.61798,-27.9725 53.48999,-27.9725l0,0z"
+         id="path3878"
+         stroke-width="0px"
+         stroke="#fab20b"
+         fill-rule="evenodd"
+         fill="url(#svg_15)"
+         style="stroke-width:0.8;stroke-miterlimit:4;stroke-dasharray:none" />
+      <path
+         d="m474.98401,258.271c-10.29602,9.20102 -28.30902,2.76898 -28.30902,-8.35397c0,-21.15503 -6.04498,-56.29102 8.94501,-62.37102c-16.88199,20.84999 35.74603,17.64998 31.88501,33.951c-4.396,27.802 -7.94501,32.68396 -12.521,36.77399l0,0z"
+         id="path3880"
+         stroke-width="2"
+         stroke="#fab20b"
+         fill-rule="evenodd"
+         fill="#2767A0" />
+      <path
+         d="m487.71899,220.23499c0,0 -6.79498,57.05603 -8.341,59.129c-1.547,2.07303 -6.573,10.02002 -21.26501,10.02002c-21.39297,0 -18.04498,-8.716 -32.61697,-12.10901c-10.11401,-2.35501 -30.97699,-3.04099 -30.383,-14.151l1.91098,-35.75496c0.61002,-11.39401 30.59601,-16.28302 42.31302,-4.50903c11.84698,11.90506 43.64395,13.50116 48.38199,-2.625l0,-0.00002z"
+         id="path3882"
+         stroke-width="2"
+         stroke="#fab20b"
+         fill-rule="evenodd"
+         fill="url(#svg_15)" />
+      <path
+         d="m417.763,295.24301c-10.29501,9.20099 -29.51001,-1.03101 -28.06299,-12.07803l7.32397,-55.91199c0,22.94202 36.94501,15.65601 36.94501,31.578c-2.07599,27.80099 -11.63,32.32202 -16.20599,36.41202z"
+         id="path3884"
+         stroke-width="2"
+         stroke="#fab20b"
+         fill-rule="evenodd"
+         fill="#2767A0" />
+      <path
+         d="m2.5232,173.0054c42.4696,-4.104 41.7112,15.6376 76.0008,15.6376c33.914,0 66.228,-17.23701 66.228,22.26102l-0.192,17.23398c-0.11099,9.91199 -39.84,4.83896 -48.812,3.995c-29.6155,0 -27.6173,-33.22899 -88.03039,-33.22899c10.61909,-2.65698 33.7717,-3.17999 48.2955,2.07401c-6.52589,-12.39572 -34.61832,-27.97232 -53.4899,-27.97232l0,-0.00003l0,-0.00003l0,-0.00003l-0.00001,0l0,-0.00003l0,-0.00003l0,-0.00003l0,-0.00003l0,-0.00002l0,-0.00003l0,-0.00002l0,0l0,-0.00002z"
+         id="path3894"
+         stroke-width="0px"
+         stroke="#fab20b"
+         fill-rule="evenodd"
+         fill="url(#svg_15)"
+         style="stroke-width:0.8;stroke-miterlimit:4;stroke-dasharray:none" />
+      <path
+         d="m115.677,258.271c10.29601,9.20102 28.30899,2.76898 28.30899,-8.35397c0,-21.15503 6.04501,-56.29102 -8.94499,-62.37102c16.882,20.84999 -35.746,17.649 -31.88499,33.951c4.396,27.80098 7.94498,32.68396 12.521,36.77399l-0.00002,0z"
+         id="path3896"
+         stroke-width="1px"
+         stroke="#fab20b"
+         fill-rule="evenodd"
+         fill="#2767A0" />
+      <path
+         d="m102.942,219.23499c0,0 6.795,57.05603 8.341,59.129c1.547,2.07303 6.57301,10.02002 21.26501,10.02002c21.392,0 18.045,-8.716 32.61699,-12.10901c10.11401,-2.35501 30.97701,-3.04099 30.38301,-14.151l-1.912,-35.75496c-0.60901,-11.39502 -30.595,-16.28302 -42.312,-4.50903c-11.847,11.90506 -43.64401,13.50116 -48.382,-2.625l0,-0.00002z"
+         id="path3898"
+         stroke-width="2"
+         stroke="#fab20b"
+         fill-rule="evenodd"
+         fill="url(#svg_15)" />
+      <path
+         d="m172.89799,295.24301c10.295,9.20099 29.50999,-1.03101 28.06299,-12.07803l-7.325,-55.91199c0,22.94202 -36.944,15.65601 -36.944,31.578c2.076,27.80099 11.629,32.32202 16.20598,36.41202l0.00003,0z"
+         id="path3900"
+         stroke-width="1px"
+         stroke="#fab20b"
+         fill-rule="evenodd"
+         fill="#2767A0" />
+      <g
+         id="svg_2">
+        <g
+           id="svg_12">
+          <g
+             id="svg_3">
+            <g
+               transform="rotate(-45 295 179)"
+               id="svg_4">
+              <rect
+                 id="svg_1"
+                 height="250"
+                 width="250"
+                 y="54"
+                 x="170"
+                 stroke-width="0"
+                 stroke="#000000"
+                 fill="url(#svg_6)" />
+            </g>
+          </g>
+          <circle
+             id="svg_7"
+             r="110.26804"
+             cy="181"
+             cx="303.00001"
+             stroke-width="0"
+             stroke="#000000"
+             fill="#0261AF"
+             d="m 413.26804,181 c 0,60.89936 -49.36868,110.26804 -110.26804,110.26804 -60.89936,0 -110.26804,-49.36868 -110.26804,-110.26804 0,-60.89936 49.36868,-110.268044 110.26804,-110.268044 60.89936,0 110.26804,49.368684 110.26804,110.268044 z" />
+          <circle
+             id="circle3014"
+             r="110.26804"
+             cy="178"
+             cx="296.00001"
+             stroke-width="0"
+             stroke="#000000"
+             fill="#ffffff"
+             d="m 406.26804,178 c 0,60.89936 -49.36868,110.26804 -110.26804,110.26804 -60.89936,0 -110.26804,-49.36868 -110.26804,-110.26804 0,-60.89936 49.36868,-110.268044 110.26804,-110.268044 60.89936,0 110.26804,49.368684 110.26804,110.268044 z" />
+          <circle
+             id="svg_8"
+             r="98.26804"
+             cy="178"
+             cx="296.00001"
+             stroke-width="0"
+             stroke="#000000"
+             fill="url(#svg_11)"
+             d="m 394.26804,178 c 0,54.27194 -43.9961,98.26804 -98.26804,98.26804 -54.27194,0 -98.26804,-43.9961 -98.26804,-98.26804 0,-54.27194 43.9961,-98.268044 98.26804,-98.268044 54.27194,0 98.26804,43.996104 98.26804,98.268044 z" />
+        </g>
+        <text
+           stroke-linejoin="null"
+           stroke-linecap="null"
+           x="303"
+           y="205"
+           id="svg_13"
+           font-size="90"
+           letter-spacing="4"
+           text-anchor="middle"
+           font-family="arial"
+           stroke-dasharray="null"
+           stroke-width="4"
+           stroke="#005FA0"
+           fill="#005FA0">acm</text>
+        <text
+           stroke-linejoin="null"
+           stroke-linecap="null"
+           x="297"
+           y="201"
+           id="text3018"
+           font-size="90"
+           letter-spacing="4"
+           text-anchor="middle"
+           font-family="arial"
+           stroke-dasharray="null"
+           stroke-width="4"
+           stroke="#ffffff"
+           fill="#ffffff">acm</text>
+      </g>
+      <path
+         d="m310.54901,345.48001c0,0 -33.34802,0 -33.34802,0c-17.91199,0 -39.47098,-1.94601 -69.49701,-6.841c-30.52798,-4.97702 -40.17398,-9.55902 -45.38197,-32.25201c-2.18701,-9.52896 -5.63901,-48.866 -5.63901,-48.866c0,15.603 27.00101,19.90201 44.73302,21.99002c23.32602,2.746 49.82098,3.909 73.49597,3.909c0,0 37.92618,0 37.92618,0c17.61682,0 53.26184,-1.16299 76.58884,-3.909c17.73199,-2.08801 35.267,-4.88702 45.10901,-23.94504c0,0 -3.828,41.29205 -6.01501,50.82101c-5.20801,22.69299 -14.88095,27.147 -45.38196,32.25201c-29.577,4.94998 -57.76605,6.841 -72.58997,6.841l-0.00003,0l-0.00003,0z"
+         id="path3902"
+         stroke-width="3"
+         stroke="#fab20b"
+         fill-rule="evenodd"
+         fill="url(#svg_15)" />
+    </g>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+     id="text3055-3"
+     sodipodi:linespacing="125%"
+     transform="matrix(0.99966407,-0.02591776,0.02591776,0.99966407,3.1545785,52.314354)"><textPath
+       xlink:href="#path3902-7"
+       startOffset="50%"
+       id="textPath3073-4"
+       style="font-size:36px;font-weight:bold;fill:#005fa0;fill-opacity:1;-inkscape-font-specification:Arial Bold">  UCR Chapter</textPath></text>
+  <text
+     xml:space="preserve"
+     style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+     id="text3055"
+     sodipodi:linespacing="125%"
+     transform="matrix(0.99978533,-0.02071901,0.02071901,0.99978533,2.3472041,48.413997)"><textPath
+       xlink:href="#path3902"
+       startOffset="50%"
+       id="textPath3073"
+       style="fill:#ffffff"><tspan
+         style="font-size:36px;font-weight:bold;-inkscape-font-specification:Arial Bold"
+         id="tspan4026"
+         dy="0 0 0 0 0 0 0 0 0.34999999 -0.34999999">  UCR Chapter</tspan></textPath></text>
+  <text
+     xml:space="preserve"
+     style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+     x="337.34808"
+     y="322.31122"
+     id="text3059"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3061"
+       x="337.34808"
+       y="322.31122" /></text>
+</svg>
