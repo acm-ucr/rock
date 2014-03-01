@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ACM@UCR - Join</title>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="description" content="ACM@UCR's website" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body id="join-page">
+    <header id="top-header">
+        <h1><a href="index.htm">ACM@UCR</a> &rarr; Become a Member</h1>
+    </header>
+    <div id="content">
+        <form id="join-form" class="pure-form pure-form-aligned">
+            <fieldset>
+                <legend>
+                    We will send you few emails: receipts of payment, reminders to pick up your T-Shirt, and not much else.
+                </legend>
+                <div class="pure-control-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" required autofocus>
+                </div>
+                <div class="pure-control-group">
+                    <label for="name">Full Name or Nickname</label>
+                    <input id="name" type="text">
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    We will design a T-Shirt towards the end of the academic year and give them out to all of our members.
+                </legend>
+                <div class="pure-control-group">
+                    <label for="t-shirt">T-Shirt Size</label>
+                    <select id="t-shirt" name="select">
+                      <option>Small</option>
+                      <option selected>Medium</option>
+                      <option>Large</option>
+                      <option>Extra-Large</option>
+                      <option value="OPTOUT">I don't want a T-Shirt</option>
+                    </select>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    Membership costs $20 and lasts for a year. The fee's primary purpose is to serve as a source of funding so we can do awesome things like host <a href="http://citrushack.com">hackathons</a>, invite speakers, organize trips, offer workshops, and anything else we can do to serve our members.
+                </legend>
+                <label for="payment-online" class="pure-radio">
+                    <input id="payment-online" type="radio" name="payment-type" value="online" checked>
+                    I want to pay online right now
+                </label>
+                <label for="payment-cash" class="pure-radio">
+                    <input id="payment-cash" type="radio" name="payment-type" value="cash">
+                    I want to pay in-person with cash (someone will contact you via email)
+                </label>
+            </fieldset>
+            <div id="join-submit-container">
+                <button id="join-submit" type="submit" class="pure-button pure-button-primary">Join ACM@UCR!</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

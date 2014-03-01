@@ -8,96 +8,15 @@
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
-
-    <style>
-        body {
-            /* Open Sans is a nice easy font-family to work with and usually
-             * yields good looking pages. The user likely has a cached copy of
-             * it already too. */
-            font-family: "Open Sans", sans-serif;
-
-            /* True white is often too bright to use as a background */
-            background-color: #FEFEFE;
-
-            /* True black is often too dark to use as a base font color */
-            color: #161616;
-
-            /* This will keep any text from riding up too close to any of the
-             * edges of the page. */
-            padding: 2em 2em;
-        }
-
-        /* This adds a margin to the bottom of every post and top-level element
-         * which helps provide a consistent level of spacing. The bottom and
-         * top margins of the page are handled by the body rules. */
-        body > *:not(:last-child), #articles > *:not(:last-child) {
-            padding-bottom: 2em;
-        }
-
-        a.pure-button-primary {
-            /* The default color that Pure.css uses is a little too harsh imo
-             * so this is a much more faded blue. */
-            background-color: #5CADB5;
-
-            /* The white on blue can be difficult to read if it's not bolded,
-             * this also makes the primary button stand out more. */
-            font-weight: 600;
-        }
-
-        #banner > img {
-            /* This allows the banner to resize to the viewport's width without
-             * getting massive. */
-            max-height: 15em;
-        }
-
-        #actions {
-            /* This is a simple trick to center the list of buttons. We use a
-             * different trick to center the posts that uses margins. That
-             * would be overkill here and require an additional containing
-             * element */
-            text-align: center;
-        }
-
-        .post {
-            /* Center the post by setting the left and right margins to auto */
-            margin: 0 auto;
-
-            /* This makes the text a little nicer to read */
-            line-height: 1.5;
-
-            /* This ensures that the posts won't get too wide because generally
-             * super wide paragraphs are considered a little harder to read.
-             * Not a lot of good empirical evidence to support this though.*/
-            max-width: 50em;
-        }
-
-        .post-title {
-            /* This brings the author part closer to the title. There is still
-             * space between the two according to the line-height though. */
-            margin-bottom: 0;
-        }
-
-        .post-author {
-            /* This makes sure that the author part of the post looks a little
-             * bit faded. It looks nice and keeps the focus on the content, but
-             * mainly it looks nice. */
-            opacity: 0.7;
-        }
-
-        a {
-            text-decoration: none;
-            color: #3b8bba;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body id="main-page">
     <header id="top-header">
         <div id="banner">
-            <img src="img/acm_logo_ucr.svg">
+            <!-- It's important to inline the max-height style here because
+                 otherwise, if the stylesheet fails to load, the logo will
+                 consume much of the screen. -->
+            <img src="img/acm_logo_ucr.svg" style="max-height: 15em">
         </div>
     </header>
     <div id="actions">
@@ -106,9 +25,9 @@
         <a href="mailto:acm@applesauce.com" class="pure-button">Contact Us</a>
     </div>
     <div id="articles">
-        <article class="post">
+        <article class="post top-level">
             <header>
-                <h2 class="post-title">ACM's 1st General Meeting Winter 2014</h3>
+                <h2 class="post-title">ACM's 1st General Meeting Winter 2014</h2>
                 <div class="post-author">by <span class="author">Samuel Hong</span> on <time datetime="2013-11-13">November 13, 2013</time></div>
             </header>
             <div class="post-body">
@@ -119,7 +38,7 @@
                 <p>If you have questions feel free to ask any of the officers, good luck and have fun in the new quarter!</p>
             </div>
         </article>
-        <article class="post">
+        <article class="post top-level">
             <header>
                 <h2 class="post-title">Embedded Systems Workshop</h3>
                 <div class="post-author">by <span class="author">Samuel Hong</span> on <time datetime="2013-11-13">November 13, 2014</time></div>

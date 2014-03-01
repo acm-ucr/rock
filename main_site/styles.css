@@ -1,0 +1,139 @@
+/* The text banners here are useful for users of Sublime Text. They were
+ * generated with the Roman font at http://www.network-science.de/ascii/ */
+
+body {
+    /* Open Sans is a nice easy font-family to work with and usually
+     * yields good looking pages. The user likely has a cached copy of
+     * it already too. */
+    font-family: "Open Sans", sans-serif;
+
+    /* True white is often too bright to use as a background */
+    background-color: #FEFEFE;
+
+    /* True black is often too dark to use as a base font color */
+    color: #161616;
+
+    /* This will keep any text from riding up too close to any of the
+     * edges of the page. */
+    padding: 2em 2em;
+}
+
+strong, b {
+    /* I prefer semi-bold to a full bold */
+    font-weight: 600;
+}
+
+a {
+    /* Our links will be blue and not have underlines */
+    text-decoration: none;
+    color: #3b8bba;
+}
+
+a:hover {
+    /* When the user hovers over a link show an underline in case they were
+     * unsure if it was really a link (we do this mostly because it looks
+     * cool but it's fun to pretend). */
+    text-decoration: underline;
+}
+
+/* This adds a margin to the bottom of every post and top-level element
+ * which helps provide a consistent level of spacing. The bottom and
+ * top margins of the page are handled by the body rules. */
+body > *:not(:last-child), .top-level {
+    padding-bottom: 2em;
+}
+
+a.pure-button-primary, button.pure-button-primary {
+    /* The default color that Pure.css uses is a little too harsh imo
+     * so this is a much more faded blue. */
+    background-color: #5CADB5;
+
+    /* The white on blue can be difficult to read if it's not bolded,
+     * this also makes the primary button stand out more. */
+    font-weight: 600;
+}
+
+/*                             o8o
+ *                              `"'
+ * ooo. .oo.  .oo.    .oooo.   oooo  ooo. .oo.
+ * `888P"Y88bP"Y88b  `P  )88b  `888  `888P"Y88b
+ *  888   888   888   .oP"888   888   888   888
+ *  888   888   888  d8(  888   888   888   888
+ * o888o o888o o888o `Y888""8o o888o o888o o888o */
+
+#main-page #banner > img {
+    /* This allows the banner to resize to the viewport's width without
+     * getting massive. */
+    max-height: 15em;
+}
+
+#main-page #actions {
+    /* This is a simple trick to center the list of buttons. We use a
+     * different trick to center the posts that uses margins. That
+     * would be overkill here and require an additional containing
+     * element */
+    text-align: center;
+}
+
+#main-page .post {
+    /* Center the post by setting the left and right margins to auto */
+    margin: 0 auto;
+
+    /* This makes the text a little nicer to read */
+    line-height: 1.5;
+
+    /* This ensures that the posts won't get too wide because generally
+     * super wide paragraphs are considered a little harder to read.
+     * Not a lot of good empirical evidence to support this though.*/
+    max-width: 50em;
+}
+
+#main-page .post-title {
+    /* This brings the author part closer to the title. There is still
+     * space between the two according to the line-height though. */
+    margin-bottom: 0;
+}
+
+#main-page .post-author {
+    /* This makes sure that the author part of the post looks a little
+     * bit faded. It looks nice and keeps the focus on the content, but
+     * mainly it looks nice. */
+    opacity: 0.7;
+}
+
+
+/*     o8o            o8o
+ *     `"'            `"'
+ *    oooo  .ooooo.  oooo  ooo. .oo.
+ *    `888 d88' `88b `888  `888P"Y88b
+ *     888 888   888  888   888   888
+ *     888 888   888  888   888   888
+ *     888 `Y8bod8P' o888o o888o o888o
+ *     888
+ * .o. 88P
+ * `Y888P                      */
+
+#join-page #top-header {
+    text-align: center;
+}
+
+#join-page #join-form {
+    max-width: 50em;
+    margin: 0 auto;
+}
+
+#join-page #join-form legend {
+    border-bottom: none;
+}
+
+#join-page #join-form fieldset {
+    width: 90%;
+    border: none;
+    margin-bottom: 1em;
+    border-bottom: 1px dotted #CCC;
+    padding-bottom: 1em;
+}
+
+#join-page #join-submit-container {
+    text-align: center;
+}
