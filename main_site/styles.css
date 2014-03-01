@@ -36,6 +36,14 @@ a:hover {
     text-decoration: underline;
 }
 
+/* We mention #content here because we need to raise the specificity of this
+ * selector to override the pure.css selector. */
+#content .pure-form legend, #content .pure-form fieldset {
+    /* By default, legend and fieldset elements have a border on the bottom. It
+     * doesn't look very good so we want to get rid of it. */
+    border-bottom: none;
+}
+
 /* This adds a margin to the bottom of every post and top-level element
  * which helps provide a consistent level of spacing. The bottom and
  * top margins of the page are handled by the body rules. */
@@ -113,27 +121,54 @@ a.pure-button-primary, button.pure-button-primary {
  * .o. 88P
  * `Y888P                      */
 
+
 #join-page #top-header {
     text-align: center;
 }
 
 #join-page #join-form {
+    /* This will make sure the text in the legends don't get too large and
+     * center the form (without actually centering the text like
+     * text-align). */
     max-width: 50em;
     margin: 0 auto;
 }
 
-#join-page #join-form legend {
-    border-bottom: none;
-}
-
 #join-page #join-form fieldset {
-    width: 90%;
-    border: none;
-    margin-bottom: 1em;
+    /* Seperate the different parts of the form nicely */
     border-bottom: 1px dotted #CCC;
+
+    /* Use both margin and padding to give space on both sides of the
+     * border. */
+    margin-bottom: 1em;
     padding-bottom: 1em;
 }
 
 #join-page #join-submit-container {
+    /* Center the submit button */
     text-align: center;
+}
+
+
+/*           oooo                            oooo
+ *           `888                            `888
+ *  .ooooo.   888 .oo.    .ooooo.   .ooooo.   888  oooo
+ * d88' `"Y8  888P"Y88b  d88' `88b d88' `"Y8  888 .8P'
+ * 888        888   888  888ooo888 888        888888.
+ * 888   .o8  888   888  888    .o 888   .o8  888 `88b.
+ * `Y8bod8P' o888o o888o `Y8bod8P' `Y8bod8P' o888o o888o  */
+
+#check-page #top-header {
+    /* Center the big title heading */
+    text-align: center;
+}
+
+#check-page #content {
+    /* The whole page is centered because there's so little on it */
+    text-align: center;
+}
+
+#check-page #check-form fieldset * {
+    /* The form is inline so space them out nicely. */
+    margin-right: 0.5em;
 }
