@@ -8,6 +8,11 @@ standard library so it should serve as useful tool in development or demoing.
 You can see how to use the script by typing ``python test-deploy.py -h`` into
 your shell of choice.
 
+.. warning::
+
+    Do not use this in a production environment to deploy the site. Ignoring
+    the fact that it will be very slow, this is not a secure application.
+
 """
 
 # We won't be able to figure out where we are in the file system using our
@@ -39,6 +44,16 @@ STATIC_DIR = os.path.join(SCRIPT_DIR, "main_site")
 """The directory containing the static portions of the site."""
 
 def proxy_app(environ, start_response):
+    """
+    This is a WSGI application according to the
+    `PEP 333 <http://legacy.python.org/dev/peps/pep-0333/>`_ standard and will
+    perform very rudimentary routing between the static portion of our site
+    and our dynamic WSGI portion. There is a little bit of security checking
+    that is done but try to avoid exposing this application to the outside
+    world as it is not battle-hardened by any means.
+
+    """
+
     # Figure out what path the user is requesting (so if they hit
     # localhost:8000/taco/time.htm, then /taco/time.htm would be in path_info).
     path_info = environ.get("PATH_INFO", "")
