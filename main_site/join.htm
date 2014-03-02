@@ -16,18 +16,18 @@
         <h1><a href="index.htm">ACM@UCR</a> &rarr; Become a Member</h1>
     </header>
     <div id="content">
-        <form id="join-form" class="pure-form pure-form-aligned" method="post" action="http://localhost:8080/">
+        <form id="join-form" class="pure-form pure-form-aligned" method="post" action="join">
             <fieldset>
                 <legend>
                     We'll send you very few emails: receipts of payment, reminders to pick up your T-Shirt, and not much else.
                 </legend>
                 <div class="pure-control-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" required autofocus>
+                    <input id="email" type="email" name="email" required autofocus>
                 </div>
                 <div class="pure-control-group">
                     <label for="name">Full Name or Nickname</label>
-                    <input id="name" type="text">
+                    <input id="name" type="text" name="name">
                 </div>
             </fieldset>
             <fieldset>
@@ -36,7 +36,7 @@
                 </legend>
                 <div class="pure-control-group">
                     <label for="t-shirt">T-Shirt Size</label>
-                    <select id="t-shirt" name="select">
+                    <select id="t-shirt" name="shirt-size">
                       <option>Small</option>
                       <option selected>Medium</option>
                       <option>Large</option>
