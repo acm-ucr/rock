@@ -124,6 +124,8 @@ def main():
     else:
         address = DEFAULT_ADDRESS
 
+    print "Serving site at http://{}:{}".format(address, port)
+
     # Serve the application until our process is killed
     httpd = wsgiref.simple_server.make_server(address, port, proxy_app)
     httpd.serve_forever()
