@@ -18,21 +18,68 @@ necessary.
 
 # stdlib
 import os
+import sys
 import cgi
 import httplib
 import logging
+import ConfigParser
+import wsgiref
+import sqlite3
+
+# internal
+import database
 
 # Create a logging object we can use throughout the application
 log = logging.getLogger("rock")
 
+# This will hold a dictionary containing our configuration options
+config = None
+
+# This will hold our sqlite3.Connection object we'll use to query our database
+db = None
+
 # Load the configuration file when the module is imported so everyone has
 # access to it.
+def initialize():
+    """
+    This performs any initialization logic for our application. It will be run
+    once per WSGI process.
 
+    """
+
+    # Load the configuration file
+    config_file_path = os.environ.get("ROCK_CONFIG", "/etc/rock/config.ini")
+    print "Loading configuration at", config_file_path
+    config_file = open(config_file_path, "r")
+
+    # Parse the configuration file
+    config_parser = ConfigParser.RawConfigParser()
+    config_parser.readfp(config_file)
+
+    # This will grab all of the configuration options under the rock section
+    # in the ini file and put them in our config dictionary.
+    global config
+    config = dict(config_parser.items("rock"))
+
+    global db
+    db = sqlite3.connect(config["db_file"])
+    database.Member.create_table(db)
+
+# Run our initialization code. This will occur when this module is first
+# imported.
+initialize()
 
 def error_response(code, start_response):
     """
     Sends a simple error response to the user that includes the error code and
     a generic description of the error.
+
+    .. note::
+
+        This function should be used to serve every error response, but it does
+        not know how to properly do that necessarily. When serving an error
+        that isn't served anywhere else, make sure to modify this function
+        as needed.
 
     :param code: The error code (ex: 404).
     :param start_response: The same ``start_response`` callable provided to
@@ -42,7 +89,7 @@ def error_response(code, start_response):
 
     """
 
-    # Get a textual description of the error so we can give it to the user.
+    # Get a textual description of the error so we can give it to the user
     description = httplib.responses[code]
 
     # The status should look similar to 404 Not Found
@@ -66,6 +113,11 @@ def app(environ, start_response):
 
         http://legacy.python.org/dev/peps/pep-0333/#the-application-framework-side
 
+    The environ parameter contains a lot of information and figuring out where
+    the information you want is can be confusing. You should consult the
+    `environ Variables <http://legacy.python.org/dev/peps/pep-0333/#environ-variables>`_
+    section of the spec in  such situations.
+
     """
 
     # We don't support anything but POST requests so tell them to go away if
@@ -80,17 +132,25 @@ def app(environ, start_response):
     # checking the referrer header seems to be a solid approach when done
     # right. Hopefully I'm doing it right here. For more information on this
     # see https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet#Checking_The_Referer_Header
-    print environ["REFERRER"]
+
+    # This will grab the url of our application. For example,
+    # http://localhost:8000 or http://acm.cs.ucr.edu might be the value here
+    app_url = wsgiref.util.application_uri(environ)
+    if not environ.get("HTTP_REFERER", "").startswith(app_url):
+        # There's not really an ideal status code to return here but
+        # unauthorized seemed like the best fit.
+        return error_response(401, start_response)
 
     # Associate paths with different handling functions
-    ROUTE_TABLE = {}
+    ROUTE_TABLE = {"/join": handle_join}
 
     # Grab the path they're trying to hit (like /check or /join)
     path_info = environ["PATH_INFO"]
     if path_info not in ROUTE_TABLE:
         return error_response(404, start_response)
+    handler = ROUTE_TABLE[path_info]
 
-    # Let the cgi module parse out the form data we received.
+    # Let the cgi module parse out the form data we received
     form_data_storage = cgi.FieldStorage(
         fp = environ["wsgi.input"],
         environ = environ,
@@ -108,8 +168,13 @@ def app(environ, start_response):
         value = form_data_storage[i].value.decode("utf_8")
         form_data[key] = value
 
+    return handler(form_data, start_response)
 
+def handle_join(form_data, start_response):
+
+
+    print form_data
     status = '200 OK'
     response_headers = [('Content-type', 'text/plain')]
     start_response(status, response_headers)
-    return ['Hello world!\n']
+    return ['Check!\n']
