@@ -30,9 +30,10 @@ import wsgiref.simple_server
 import hashlib
 import time
 import multiprocessing
+import types
 
 # internal
-import signup_server.main
+import signup_server as wsgi_app
 
 DEFAULT_PORT = 8000
 """The default port to listen on if no port is provided on the command line."""
@@ -105,9 +106,17 @@ def proxy_app(environ, start_response):
         # If we're not serving a status file we want to let our application
         # code handle it, so just call our main wsgi app to deal with the
         # rest.
-        return signup_server.main.app(environ, start_response)
+        return wsgi_app.main.app(environ, start_response)
 
 def serve_site(address, port, app):
+    # Reload our application's code. This can be a little confusing to think
+    # about but when the process starts into this function, it is a copy of
+    # the main process and will therefore have all of the stale imports it had
+    # when it first started.
+    reload(wsgi_app)
+    for i in wsgi_app.modules:
+        reload(i)
+
     # Serve the application until our process is killed
     httpd = wsgiref.simple_server.make_server(address, port, app)
     httpd.serve_forever()
