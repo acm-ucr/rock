@@ -25,12 +25,27 @@ import logging
 import ConfigParser
 import wsgiref
 import sqlite3
+import datetime
 
 # internal
 import database
 
 # Create a logging object we can use throughout the application
 log = logging.getLogger("rock")
+
+CONFIG_PATH_VAR = "ROCK_CONFIG"
+"""
+The name of the enviornmental variable to check for the path of the
+configuration file to load.
+
+"""
+
+DEFAULT_CONFIG_PATH = "/etc/rock/config.ini"
+"""
+If the environmental variable named by ``CONFIG_PATH_VAR`` is not set, this
+is the configuration file that will be loaded.
+
+"""
 
 # This will hold a dictionary containing our configuration options
 config = None
@@ -47,9 +62,17 @@ def initialize():
 
     """
 
-    # Load the configuration file
-    config_file_path = os.environ.get("ROCK_CONFIG", "/etc/rock/config.ini")
-    print "Loading configuration at", config_file_path
+    # Let the user know how the configuration file is going to be loaded
+    if CONFIG_PATH_VAR in os.environ:
+        print ("Environmental variable {} set. Loading configuration at "
+            "{}.".format(CONFIG_PATH_VAR, os.environ[CONFIG_PATH_VAR]))
+    else:
+        print ("Environmental variable {} not set. Loading default "
+            "configuration at {}.".format(
+                CONFIG_PATH_VAR, DEFAULT_CONFIG_PATH))
+
+    # Actually load the configuration file
+    config_file_path = os.environ.get(CONFIG_PATH_VAR, DEFAULT_CONFIG_PATH)
     config_file = open(config_file_path, "r")
 
     # Parse the configuration file
@@ -63,7 +86,6 @@ def initialize():
 
     global db
     db = sqlite3.connect(config["db_file"])
-    database.Member.create_table(db)
 
 # Run our initialization code. This will occur when this module is first
 # imported.
@@ -142,7 +164,7 @@ def app(environ, start_response):
         return error_response(401, start_response)
 
     # Associate paths with different handling functions
-    ROUTE_TABLE = {"/join": handle_join}
+    ROUTE_TABLE = {"/join": handle_join, "/check": handle_check}
 
     # Grab the path they're trying to hit (like /check or /join)
     path_info = environ["PATH_INFO"]
@@ -171,10 +193,35 @@ def app(environ, start_response):
     return handler(form_data, start_response)
 
 def handle_join(form_data, start_response):
+    # This ensures that the member table is created and that it has the exact
+    # columns we expect it to.
+    database.Member.create_table(db)
 
+    # Add the member to the database
+    new_member = database.Member(
+        joined = datetime.datetime.today(),
+        email = form_data["email"],
+        name = form_data["name"],
+        shirt_size = form_data["shirt-size"],
+        paid_on = None
+    )
+    try:
+        new_member.insert(db)
+    except sqlite3.IntegrityError:
+        # This will occur if the email that was provided was not unique or some
+        # other contraint was violated. We will assume the case is the former,
+        # but check the logs for the actual exception if users are reporting
+        # difficulties joining.
+        log.info("Could not add user with email %r to database.",
+            exc_info = True)
 
-    print form_data
-    status = '200 OK'
-    response_headers = [('Content-type', 'text/plain')]
+    status = "200 OK"
+    response_headers = [("Content-type", "text/plain")]
+    start_response(status, response_sheaders)
+    return ["I am a teapot."]
+
+def handle_check(form_data, start_response):
+    status = "200 OK"
+    response_headers = [("Content-type", "text/plain")]
     start_response(status, response_headers)
-    return ['Check!\n']
+    return [repr(form_data)]
