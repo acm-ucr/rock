@@ -1,6 +1,8 @@
 # stdlib
 import collections
 import logging
+import datetime
+import calendar
 
 log = logging.getLogger("rock.database")
 
@@ -74,14 +76,16 @@ class BaseModel(object):
                 for i in cls.columns])
 
         # Create the table if it doesn't already exist
-        db.execute("CREATE TABLE IF NOT EXISTS {} ({})".format(cls.table_name,
+        db.execute("CREATE TABLE IF NOT EXISTS {} ({});".format(cls.table_name,
             columns_definition))
+        db.commit()
 
         # Verify that the table has exactly the right columns. The PRAGMA
         # table_info query will give us a list of tuples. For information on
         # what it gives us exaclty see
-        # http://www.sqlite.org/pragma.html#pragma_table_info
-        column_info = list(db.execute("PRAGMA table_info({})".format(
+        # http://www.sqlite.org/pragma.html#pragma_table_info. Note that this
+        # does not verify column contraints.
+        column_info = list(db.execute("PRAGMA table_info({});".format(
             cls.table_name)))
         if len(column_info) != len(cls.columns):
             raise RuntimeError("table is not as expected")
@@ -101,7 +105,7 @@ class BaseModel(object):
         # actual question marks. The question marks will be filled in by the
         # execute call below which will ensure that SQL injection attacks can't
         # occur here.
-        pre_query = "INSERT INTO {} VALUES ({})".format(self.table_name,
+        pre_query = "INSERT INTO {} VALUES ({});".format(self.table_name,
             ",".join(["?"] * len(self.columns)))
 
         # Generate the list of values we'll shove into our pre_query above
@@ -109,6 +113,10 @@ class BaseModel(object):
         for i in self.columns:
             values.append(getattr(self, i.name))
 
+        # This will execute the query after first filling in all the question
+        # marks with our values. Each value will be shoved through the sqlite3
+        # module's escaping function that should prevent any nasty sql
+        # injection attacks.
         db.execute(pre_query, values)
         db.commit()
 
@@ -117,9 +125,123 @@ class Member(BaseModel):
 
     table_name = "members"
     columns = [
-        Column("joined", "DATE", ""),
+        Column("joined", "DATETIME", ""),
         Column("email", "TEXT", "PRIMARY KEY"),
         Column("name", "TEXT", ""),
         Column("shirt_size", "TEXT", ""),
-        Column("paid_on", "DATE", "")
+        Column("paid_on", "DATETIME", "")
     ]
+
+class RateLimiter(BaseModel):
+    table_name = "rate_limiting"
+    columns = [
+        Column("minute", "INTEGER", "PRIMARY KEY"),
+        Column("join_counter", "INTEGER", ""),
+        Column("check_counter", "INTEGER", "")
+    ]
+
+    def insert(self, db):
+        # Simply inserting a row into the rate limiting table might mess things
+        # up and is never what should be done.
+        raise RuntimeError("operation not supported")
+
+    @classmethod
+    def try_action(cls, db, action, max_per_minute):
+        if action == "join":
+            # What will be added to the join_counter
+            add_to_join_counter = 1
+
+            # What will be added to the check_counter
+            add_to_check_counter = 0
+
+            # The column index of the counter we're modifying
+            counter_index = 1
+        elif action == "check":
+            add_to_join_counter = 0
+            add_to_check_counter = 1
+            counter_index = 2
+        else:
+            raise ValueError("unknown action {}".format(repr(action)))
+
+        # Form up the query that will atomically update the current minute's
+        # entry in the table. This operation is often called an upsert (a
+        # combination of the terms update and insert).
+        upsert_pre_query = """
+            INSERT OR REPLACE INTO {table_name} VALUES (
+                -- We'll fill in the minute here later by letting the sqlite3
+                -- module do it. Letting the module do it helps us guard
+                -- against SQL injection.
+                :minute,
+
+                -- This will add to either the current value of join_counter
+                -- (which the embedded SELECT retrieves) or set the
+                -- join_counter to whatever {add_to_join_counter} is.
+                {add_to_join_counter} + COALESCE(
+                    (SELECT join_counter FROM {table_name} WHERE
+                        minute=:minute),
+                    0
+                ),
+
+                -- This will do the same thing as above but to the
+                -- check_counter.
+                {add_to_check_counter} + COALESCE(
+                    (SELECT check_counter FROM {table_name} WHERE
+                        minute=:minute),
+                    0
+                )
+            );
+        """
+
+        # Actually fill in the {bla} fields in the pre_query. We do this in two
+        # steps because it looks prettier.
+        upsert_pre_query = upsert_pre_query.format(
+            table_name = cls.table_name,
+            add_to_check_counter = add_to_check_counter,
+            add_to_join_counter = add_to_join_counter
+        )
+
+        # Form up the query that will delete all the minutes we're not
+        # interested in (which is any minute that has already passed). We
+        # don't know that another process hasn't added a minute that's in the
+        # future which is why we don't do a blanked not equal to.
+        delete_pre_query = "DELETE FROM {} WHERE minute<:minute;".format(
+            cls.table_name)
+
+        # Form up the query will grab all the current minutes information
+        select_pre_query = "SELECT * FROM {};".format(cls.table_name)
+
+        # Get the current date and time and then strip out the second and
+        # microsecond information. Note that even though the today() function
+        # looks like it would only return a date, it does indeed also return
+        # the time. Also note that the datetime object is immutable so we can't
+        # just assign second and microsecond to 0.
+        now = datetime.datetime.today()
+        minute_datetime = datetime.datetime(now.year, now.month, now.day,
+            now.hour, now.minute, 0, 0, now.tzinfo)
+
+        # Convert the time into a unix timestamp, this will be our minute
+        # value.
+        minute = calendar.timegm(now.utctimetuple())
+        print repr(minute), type(minute)
+
+        cur = db.cursor()
+
+        # Execute our commands
+        cur.execute(upsert_pre_query, {"minute": minute})
+        cur.execute(delete_pre_query, {"minute": minute})
+        cur.execute(select_pre_query)
+
+        # Commit the transaction
+        db.execute("COMMIT")
+
+        # This should give us a single row, the row we just upserted
+        print repr(cur.fetchone())
+        # results = cur.fetchall()
+        # print len(results)
+        # assert len(results) == 1
+
+        # Grab our one result
+        results = results[0]
+
+        return results[counter_index] <= max_per_minute
+

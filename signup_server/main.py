@@ -84,8 +84,16 @@ def initialize():
     global config
     config = dict(config_parser.items("rock"))
 
+    # Connect to the sqlite database. We use some embedded selects in some of
+    # our commands and I'm not sure if those selects will be executed before or
+    # after the reserved lock is put onto the database (when the actual
+    # statement involves a write). To remove any doubt I make all transactions
+    # immediate which causes a reserved lock to be put on the database as soon
+    # as a transaction begins. Unfortunately the sqlite3 module insists on
+    # starting transactions itself and can therefore be a little tricky to do
+    # right. I make appropriate comments wherever possible.
     global db
-    db = sqlite3.connect(config["db_file"])
+    db = sqlite3.connect(config["db_file"], isolation_level = "IMMEDIATE")
 
 # Run our initialization code. This will occur when this module is first
 # imported.
@@ -193,6 +201,16 @@ def app(environ, start_response):
     return handler(form_data, start_response)
 
 def handle_join(form_data, start_response):
+    # This ensures that the rate limiting table is created and has the exact
+    # columns we expect it to.
+    database.RateLimiter.create_table(db)
+
+    # See if we should reject the join attempt because too many attempts have
+    # been made site-wide in this minute
+    if not database.RateLimiter.try_action(db, "join",
+            int(config["max_joins_per_minute"])):
+        return error_response(420)
+
     # This ensures that the member table is created and that it has the exact
     # columns we expect it to.
     database.Member.create_table(db)
