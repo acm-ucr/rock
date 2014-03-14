@@ -22,15 +22,16 @@ if __name__ != "__main__":
     raise ImportError("This script should not be imported.")
 
 # stdlib
-import sys
-import os
+import hashlib
+import logging
 import mimetypes
+import multiprocessing
+import os
+import sys
+import time
+import types
 import wsgiref
 import wsgiref.simple_server
-import hashlib
-import time
-import multiprocessing
-import types
 
 # internal
 import signup_server as wsgi_app
@@ -80,7 +81,7 @@ def proxy_app(environ, start_response):
 
     # Make sure the file requested is within the static directory. This will
     # only fail if they used any .. strings in their path or if they found any
-    # other symbolic links out of the directory.
+    # other links out of the directory.
     if not file_path.startswith(STATIC_DIR):
         start_response("403 FORBIDDEN", [])
         return ["GO AWAY\n"]
@@ -116,6 +117,11 @@ def serve_site(address, port, app):
     reload(wsgi_app)
     for i in wsgi_app.modules:
         reload(i)
+
+    # Enable logging to standard out
+    log_format = ("[%(name)7s:%(lineno)3s - %(funcName)14s] %(levelname)5s "
+        "- %(message)s")
+    logging.basicConfig(level = logging.DEBUG, format = log_format)
 
     # Serve the application until our process is killed
     httpd = wsgiref.simple_server.make_server(address, port, app)

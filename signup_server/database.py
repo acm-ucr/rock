@@ -165,9 +165,12 @@ class RateLimiter(BaseModel):
 
         # Form up the query that will atomically update the current minute's
         # entry in the table. This operation is often called an upsert (a
-        # combination of the terms update and insert).
+        # combination of the terms update and insert), because we will update
+        # the row for the current minute if one exists, otherwise it will
+        # a new row.
         upsert_pre_query = """
-            INSERT OR REPLACE INTO {table_name} VALUES (
+            INSERT OR REPLACE INTO {table_name}
+                    (minute, join_counter, check_counter) VALUES (
                 -- We'll fill in the minute here later by letting the sqlite3
                 -- module do it. Letting the module do it helps us guard
                 -- against SQL injection.
@@ -189,7 +192,7 @@ class RateLimiter(BaseModel):
                         minute=:minute),
                     0
                 )
-            );
+            )
         """
 
         # Actually fill in the {bla} fields in the pre_query. We do this in two
@@ -203,12 +206,13 @@ class RateLimiter(BaseModel):
         # Form up the query that will delete all the minutes we're not
         # interested in (which is any minute that has already passed). We
         # don't know that another process hasn't added a minute that's in the
-        # future which is why we don't do a blanked not equal to.
-        delete_pre_query = "DELETE FROM {} WHERE minute<:minute;".format(
+        # future which is why we don't do a blanket not equal to.
+        delete_pre_query = "DELETE FROM {} WHERE minute<:minute".format(
             cls.table_name)
 
         # Form up the query will grab all the current minutes information
-        select_pre_query = "SELECT * FROM {};".format(cls.table_name)
+        select_pre_query = "SELECT * FROM {} WHERE minute=:minute".format(
+            cls.table_name)
 
         # Get the current date and time and then strip out the second and
         # microsecond information. Note that even though the today() function
@@ -216,32 +220,39 @@ class RateLimiter(BaseModel):
         # the time. Also note that the datetime object is immutable so we can't
         # just assign second and microsecond to 0.
         now = datetime.datetime.today()
-        minute_datetime = datetime.datetime(now.year, now.month, now.day,
+        now = datetime.datetime(now.year, now.month, now.day,
             now.hour, now.minute, 0, 0, now.tzinfo)
 
         # Convert the time into a unix timestamp, this will be our minute
         # value.
         minute = calendar.timegm(now.utctimetuple())
-        print repr(minute), type(minute)
 
+        # Start a transaction and immediately lock the database to prevent
+        # anyone else from making a write while we're working.
         cur = db.cursor()
+        db.execute("BEGIN IMMEDIATE")
 
         # Execute our commands
         cur.execute(upsert_pre_query, {"minute": minute})
         cur.execute(delete_pre_query, {"minute": minute})
-        cur.execute(select_pre_query)
+        cur.execute(select_pre_query, {"minute": minute})
 
         # Commit the transaction
-        db.execute("COMMIT")
+        cur.execute("COMMIT")
 
         # This should give us a single row, the row we just upserted
-        print repr(cur.fetchone())
-        # results = cur.fetchall()
-        # print len(results)
-        # assert len(results) == 1
+        results = cur.fetchall()
+        assert len(results) == 1, "Expected 1 result, got {}.".format(
+            len(results))
 
         # Grab our one result
         results = results[0]
 
+        log.info("Logged %r %r actions in the last minute (minute %r).",
+            results[counter_index], action, minute)
+
+        # Check the counter (which counter we're looking at is set at the top
+        # of this function) to ensure there hasn't been too many requests in
+        # the past minute.
         return results[counter_index] <= max_per_minute
 

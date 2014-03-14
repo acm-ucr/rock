@@ -84,22 +84,18 @@ def initialize():
     global config
     config = dict(config_parser.items("rock"))
 
-    # Connect to the sqlite database. We use some embedded selects in some of
-    # our commands and I'm not sure if those selects will be executed before or
-    # after the reserved lock is put onto the database (when the actual
-    # statement involves a write). To remove any doubt I make all transactions
-    # immediate which causes a reserved lock to be put on the database as soon
-    # as a transaction begins. Unfortunately the sqlite3 module insists on
-    # starting transactions itself and can therefore be a little tricky to do
-    # right. I make appropriate comments wherever possible.
+    # Connect to the sqlite database. We set the isolation_level to None here
+    # in order to disable automatic transactions. See
+    # http://johncs.com/posts/1-sqlite3_transactions.htm for more information
+    # on this behavior.
     global db
-    db = sqlite3.connect(config["db_file"], isolation_level = "IMMEDIATE")
+    db = sqlite3.connect(config["db_file"], isolation_level = None)
 
 # Run our initialization code. This will occur when this module is first
 # imported.
 initialize()
 
-def error_response(code, start_response):
+def error_response(code, start_response, message = None):
     """
     Sends a simple error response to the user that includes the error code and
     a generic description of the error.
@@ -129,7 +125,10 @@ def error_response(code, start_response):
     headers = [("Content-Type", "text/plain")]
 
     # Figure out the content we're going to send to the user
-    content = status
+    content = "{}".format(status)
+
+    if message is not None:
+        content += "\n\n{}".format(message)
 
     start_response(status, headers)
     return [content]
@@ -209,7 +208,8 @@ def handle_join(form_data, start_response):
     # been made site-wide in this minute
     if not database.RateLimiter.try_action(db, "join",
             int(config["max_joins_per_minute"])):
-        return error_response(420)
+        return error_response(500, start_response,
+            "Request failed due to rate limiting.")
 
     # This ensures that the member table is created and that it has the exact
     # columns we expect it to.
@@ -231,11 +231,13 @@ def handle_join(form_data, start_response):
         # but check the logs for the actual exception if users are reporting
         # difficulties joining.
         log.info("Could not add user with email %r to database.",
-            exc_info = True)
+            form_data["email"], exc_info = True)
+        return error_response(500, start_response,
+            "Email is already registered.")
 
     status = "200 OK"
     response_headers = [("Content-type", "text/plain")]
-    start_response(status, response_sheaders)
+    start_response(status, response_headers)
     return ["I am a teapot."]
 
 def handle_check(form_data, start_response):
