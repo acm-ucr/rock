@@ -165,6 +165,8 @@ def app(environ, start_response):
     # This will grab the url of our application. For example,
     # http://localhost:8000 or http://acm.cs.ucr.edu might be the value here
     app_url = wsgiref.util.application_uri(environ)
+
+    # Make sure that the referer comes from our site
     if not environ.get("HTTP_REFERER", "").startswith(app_url):
         # There's not really an ideal status code to return here but
         # unauthorized seemed like the best fit.
@@ -205,7 +207,7 @@ def handle_join(form_data, start_response):
     database.RateLimiter.create_table(db)
 
     # See if we should reject the join attempt because too many attempts have
-    # been made site-wide in this minute
+    # been made site-wide in this minute.
     if not database.RateLimiter.try_action(db, "join",
             int(config["max_joins_per_minute"])):
         return error_response(500, start_response,
@@ -215,7 +217,7 @@ def handle_join(form_data, start_response):
     # columns we expect it to.
     database.Member.create_table(db)
 
-    # Add the member to the database
+    # Craft a new member (doesn't put it into the database immediately)
     new_member = database.Member(
         joined = datetime.datetime.today(),
         email = form_data["email"],
@@ -223,7 +225,9 @@ def handle_join(form_data, start_response):
         shirt_size = form_data["shirt-size"],
         paid_on = None
     )
+
     try:
+        # Add the member to the database
         new_member.insert(db)
     except sqlite3.IntegrityError:
         # This will occur if the email that was provided was not unique or some
@@ -241,6 +245,17 @@ def handle_join(form_data, start_response):
     return ["I am a teapot."]
 
 def handle_check(form_data, start_response):
+    # This ensures that the rate limiting table is created and has the exact
+    # columns we expect it to.
+    database.RateLimiter.create_table(db)
+
+    # See if we should reject the check attempt because too many attempts have
+    # been made site-wide in this minute
+    if not database.RateLimiter.try_action(db, "check",
+            int(config["max_checks_per_minute"])):
+        return error_response(500, start_response,
+            "Request failed due to rate limiting.")
+
     status = "200 OK"
     response_headers = [("Content-type", "text/plain")]
     start_response(status, response_headers)
