@@ -147,6 +147,21 @@ class RateLimiter(BaseModel):
 
     @classmethod
     def try_action(cls, db, action, max_per_minute):
+        """
+        Tries to record the given action in the rate limiting table.
+
+        :param db: The SQLite database as returned by ``sqlite3.connect()``.
+        :param action: The name of the action. Can be ``"check"`` or
+            ``"join"``.
+        :param max_per_minute: The maximum number of times the action should be
+            allowed to occur in a single minute.
+
+        :returns: ``True`` if the action should be performed, ``False``
+            otherwise (the action has occurred too many times in the past
+            minute).
+
+        """
+
         if action == "join":
             # What will be added to the join_counter
             add_to_join_counter = 1
@@ -196,7 +211,8 @@ class RateLimiter(BaseModel):
         """
 
         # Actually fill in the {bla} fields in the pre_query. We do this in two
-        # steps because it looks prettier.
+        # steps (rather than add .format() immediately after the strings above)
+        # because it looks prettier.
         upsert_pre_query = upsert_pre_query.format(
             table_name = cls.table_name,
             add_to_check_counter = add_to_check_counter,
@@ -210,7 +226,7 @@ class RateLimiter(BaseModel):
         delete_pre_query = "DELETE FROM {} WHERE minute<:minute".format(
             cls.table_name)
 
-        # Form up the query will grab all the current minutes information
+        # Form up the query that will grab all the current minutes information
         select_pre_query = "SELECT * FROM {} WHERE minute=:minute".format(
             cls.table_name)
 
